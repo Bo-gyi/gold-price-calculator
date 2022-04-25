@@ -3,7 +3,9 @@ const calculator = document.querySelector(".calculator")
 
 const priceDisplay = calculator.querySelector(".price_display")
 const fifteenDisplay = calculator.querySelector(".fifteen_display")
-
+const fourteenAndHalfDisplay = calculator.querySelector(".fourteenAndHalf_display")
+const fourteenDisplay = calculator.querySelector(".fourteen_display")
+const thirteenDisplay = calculator.querySelector(".thirteen_display")
 const keys = calculator.querySelector(".calculator__keys")
 const decimalKey = keys.querySelector(".decimal")
 
@@ -52,32 +54,20 @@ keys.addEventListener("click", (event) => {
 
 })
 
-
-function convertToKyat(gram) {
-    const c = 16.606
-    const kyatWeight = gram / c
-    const kyat = Math.floor(kyatWeight)
-    const pel = Math.floor((kyatWeight - kyat) * 16)
-    const yway = Math.round(((kyatWeight * 128) % 8) * 100) / 100
-    // post to display
-    kyatDisplay.textContent = kyat
-    pelDisplay.textContent = pel
-    ywayDisplay.textContent = yway
+function roundResult(num) {
+    return Math.round(num / 100) * 100
 }
-
-function convertToGram() {
-    const kyat = parseInt(kyatDisplay.textContent),
-        pel = parseInt(pelDisplay.textContent),
-        yway = parseFloat(ywayDisplay.textContent);
-    const gramValue = (kyat + (pel / 16) + (yway / 128)) * 16.606
-    gramDisplay.textContent = gramValue.toFixed(3)
-
-}
-
 
 function calculateAndUpdate() {
     const price = parseInt(priceDisplay.dataset.value);
-    const fifteen = price / 17 * 16
-    const roundedResult = Math.round(fifteen / 100) * 100
-    fifteenDisplay.textContent = numberFormat.format(roundedResult)
+    const fifteenPrice = price / 17 * 16
+    const fourteenAndHalfPrice = price / 17.5 * 16
+    const fourteenPrice = price / 18 * 16
+    const thirteenPrice = price / 19 * 16
+
+    fifteenDisplay.textContent = numberFormat.format(roundResult(fifteenPrice))
+    fourteenAndHalfDisplay.textContent = numberFormat.format(roundResult(fourteenAndHalfPrice))
+    fourteenDisplay.textContent = numberFormat.format(roundResult(fourteenPrice))
+    thirteenDisplay.textContent = numberFormat.format(roundResult(thirteenPrice))
+
 }
